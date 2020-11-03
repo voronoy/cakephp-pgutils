@@ -1,0 +1,42 @@
+{
+  "name": "voronoy/cakephp-pgutils",
+  "description": "CakePHP plugin with useful PostgreSQL functionality ",
+  "type": "cakephp-plugin",
+  "keywords": [
+    "cakephp",
+    "postgresql",
+    "behavior",
+    "plugin",
+    "upsert",
+    "bulk upsert",
+    "array types"
+  ],
+  "homepage": "https://github.com/voronoy/cakephp-pgutils",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "voronoy",
+      "role": "Author",
+      "homepage": "https://github.com/voronoy"
+    }
+  ],
+  "support": {
+    "source": "https://github.com/voronoy/cakephp-pgutils"
+  },
+  "require": {
+    "php": ">=7.2.0",
+    "cakephp/orm": "^4.0"
+  },
+  "require-dev": {
+    "cakephp/cakephp": "^4.0",
+    "phpunit/phpunit": "~8.5.0"
+  },
+  "autoload": {
+    "files": [
+      "src/functions.php"
+    ],
+    "psr-4": {
+      "PgUtils\\": "src"
+    }
+  }
+}
