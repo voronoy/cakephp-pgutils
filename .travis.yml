@@ -1,16 +1,14 @@
 language: php
 
 php:
-  - 7.2
   - 7.4
 
 services:
   - postgresql
 
 env:
-  matrix:
-    - DB=pgsql db_host='127.0.0.1' db_user=postgres db_name=cakephp_test
   global:
+    - DB=pgsql db_host='127.0.0.1' db_user=postgres db_name=cakephp_test
     - DEFAULT=1
 
 matrix:
@@ -18,7 +16,7 @@ matrix:
 
   include:
     - php: 7.4
-      env: COVERAGE=1 DEFAULT=1
+      env: COVERAGE=1
 
 before_script:
   - if [[ $COVERAGE != 1 ]]; then phpenv config-rm xdebug.ini; fi
