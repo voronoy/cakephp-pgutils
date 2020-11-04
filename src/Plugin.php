@@ -1,13 +1,12 @@
 <?php
 declare(strict_types=1);
 
-namespace PgUtils;
+namespace Voronoy\PgUtils;
 
 use Cake\Core\BasePlugin;
 
 class Plugin extends BasePlugin
 {
-
     /**
      * Plugin name
      *
@@ -42,5 +41,4 @@ class Plugin extends BasePlugin
      * @var bool
      */
     protected $consoleEnabled = false;
-
 }

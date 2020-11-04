@@ -28,15 +28,26 @@
     "cakephp/orm": "^4.0"
   },
   "require-dev": {
+    "ext-pdo": "*",
     "cakephp/cakephp": "^4.0",
-    "phpunit/phpunit": "~8.5.0"
+    "phpunit/phpunit": "~8.5.0",
+    "cakephp/cakephp-codesniffer": "^4.2"
   },
   "autoload": {
     "files": [
       "src/functions.php"
     ],
     "psr-4": {
-      "PgUtils\\": "src"
+      "Voronoy\\PgUtils\\": "src"
     }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Voronoy\\PgUtils\\Test\\": "tests"
+    }
+  },
+  "scripts": {
+    "cs-check": "phpcs -p --standard=vendor/cakephp/cakephp-codesniffer/CakePHP src/",
+    "test": "phpunit"
   }
 }

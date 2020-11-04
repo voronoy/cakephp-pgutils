@@ -1,16 +1,24 @@
 <?php
 declare(strict_types=1);
 
-namespace PgUtils;
+namespace Voronoy\PgUtils;
 
-function parse_pg_array(?string $data, ?callable $callback = null): ?array
+/**
+ * Convert PostgreSQL array to PHP array.
+ *
+ * @param string|null   $data      Data to convert
+ * @param callable|null $processor Additional processor
+ * @return array|null
+ */
+function parse_pg_array(?string $data, ?callable $processor = null): ?array
 {
     if (empty($data) || $data[0] !== '{') {
         return null;
     }
     $return = [];
-    $depth  = 0;
-    for ($i = 0; $i < strlen($data); $i++) {
+    $depth = 0;
+    $length = strlen($data);
+    for ($i = 0; $i < $length; $i++) {
         if ($data[$i] === '{') {
             $depth++;
         } else {
@@ -19,21 +27,21 @@ function parse_pg_array(?string $data, ?callable $callback = null): ?array
     }
     if ($depth >= 2) {
         $closeBraces = str_repeat('}', $depth - 1);
-        $openBraces  = str_repeat('{', $depth - 1);
-        $delimiter   = $closeBraces . ',' . $openBraces;
-        $string      = substr($data, $depth, -$depth);
-        $parts       = explode($delimiter, $string);
+        $openBraces = str_repeat('{', $depth - 1);
+        $delimiter = $closeBraces . ',' . $openBraces;
+        $string = substr($data, $depth, -$depth);
+        $parts = explode($delimiter, $string);
         foreach ($parts as $part) {
-            $return [] = parse_pg_array($openBraces . $part . $closeBraces, $callback);
+            $return[] = parse_pg_array($openBraces . $part . $closeBraces, $processor);
         }
 
         return $return;
     } else {
-        return array_map(function ($value) use ($callback) {
+        return array_map(function ($value) use ($processor) {
             if (strtolower($value) === 'null') {
                 return null;
-            } elseif (is_callable($callback)) {
-                return call_user_func($callback, $value);
+            } elseif (is_callable($processor)) {
+                return call_user_func($processor, $value);
             } else {
                 return stripcslashes($value);
             }
@@ -41,6 +49,12 @@ function parse_pg_array(?string $data, ?callable $callback = null): ?array
     }
 }
 
+/**
+ * Convert PHP array to PostgreSQL array.
+ *
+ * @param array|null $data Data to convert
+ * @return string|null
+ */
 function to_pg_array(?array $data): ?string
 {
     if ($data === null) {
