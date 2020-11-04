@@ -9,7 +9,7 @@ services:
 
 env:
   matrix:
-    - DB=pgsql db_dsn='postgres://postgres@127.0.0.1/cakephp_test'
+    - DB=pgsql db_host='127.0.0.1' db_user=postgres db_name=cakephp_test
   global:
     - DEFAULT=1
 
