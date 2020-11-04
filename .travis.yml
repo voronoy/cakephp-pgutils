@@ -1,0 +1,38 @@
+language: php
+
+php:
+  - 7.2
+  - 7.4
+
+services:
+  - postgresql
+
+env:
+  matrix:
+    - DB=pgsql db_dsn='postgres://postgres@127.0.0.1/cakephp_test'
+  global:
+    - DEFAULT=1
+
+matrix:
+  fast_finish: true
+
+  include:
+    - php: 7.4
+      env: COVERAGE=1 DEFAULT=1
+
+before_script:
+  - if [[ $COVERAGE != 1 ]]; then phpenv config-rm xdebug.ini; fi
+
+  - if [[ $PREFER_LOWEST != 1 ]]; then composer install --no-interaction ; fi
+  - if [[ $PREFER_LOWEST == 1 ]]; then composer update --prefer-lowest --prefer-stable --no-interaction ; fi
+
+  - if [[ $DB == 'pgsql' ]]; then psql -c 'CREATE DATABASE cakephp_test;' -U postgres; fi
+
+script:
+  - if [[ $DEFAULT == 1 ]]; then vendor/bin/phpunit; fi
+  - if [[ $COVERAGE == 1 ]]; then vendor/bin/phpunit --coverage-clover=clover.xml; fi
+
+  - if [[ $CHECKS == 1 ]]; then composer cs-check; fi
+
+notifications:
+  email: false
