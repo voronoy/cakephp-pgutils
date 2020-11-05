@@ -9,6 +9,7 @@ use Voronoy\PgUtils\Database\Type\ArrayType;
 use Voronoy\PgUtils\Database\Type\FloatArrayType;
 use Voronoy\PgUtils\Database\Type\IntArrayType;
 use Voronoy\PgUtils\Test\TestApp\Model\Table\ArraysTable;
+use function Voronoy\PgUtils\parse_pg_array;
 
 class ArrayTypeTest extends TestCase
 {
@@ -59,6 +60,16 @@ class ArrayTypeTest extends TestCase
         $this->Arrays->save($second);
         $second = $this->Arrays->get($second->id);
         $this->assertNull($second->txt2);
+    }
+
+    public function testNull()
+    {
+        $nulls = '{NULL,"null","","NULL"}';
+        $actual = parse_pg_array($nulls);
+        $this->assertNull($actual[0]);
+        $this->assertEquals('null', $actual[1]);
+        $this->assertEquals('', $actual[2]);
+        $this->assertEquals('NULL', $actual[3]);
     }
 
     public function testManyToPHP()

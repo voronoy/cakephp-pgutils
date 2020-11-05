@@ -37,15 +37,20 @@ function parse_pg_array(?string $data, ?callable $processor = null): ?array
 
         return $return;
     } else {
-        return array_map(function ($value) use ($processor) {
-            if (strtolower($value) === 'null') {
-                return null;
+        $parsed = str_getcsv(trim($data, '{}'));
+        $parsedWithNulls = str_getcsv(trim($data, '{}'), ',', "\u{2007}");
+        $return = [];
+        foreach ($parsed as $i => $value) {
+            if ($value === 'NULL' && $parsedWithNulls[$i] === 'NULL') {
+                $return[] = null;
             } elseif (is_callable($processor)) {
-                return call_user_func($processor, $value);
+                $return[] = call_user_func($processor, $value);
             } else {
-                return stripcslashes($value);
+                $return[] = stripcslashes($value);
             }
-        }, str_getcsv(trim($data, '{}')));
+        }
+
+        return $return;
     }
 }
 
