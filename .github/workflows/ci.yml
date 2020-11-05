@@ -9,27 +9,6 @@ on:
       - '*'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Validate composer.json and composer.lock
-        run: composer validate
-
-      - name: Cache Composer packages
-        id: composer-cache
-        uses: actions/cache@v2
-        with:
-          path: vendor
-          key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-php-
-
-      - name: Install dependencies
-        if: steps.composer-cache.outputs.cache-hit != 'true'
-        run: composer install --prefer-dist --no-progress --no-suggest
 
   testsuite:
     runs-on: ubuntu-latest
@@ -67,9 +46,10 @@ jobs:
           key: ${{ runner.os }}-composer-${{ steps.key-date.outputs.date }}-${{ hashFiles('composer.json') }}
 
       - name: composer install
-        run: composer install --no-suggest
+        run: composer install
 
       - name: Run PHPUnit
         run: |
           if [[ ${{ matrix.db-type }} == 'pgsql' ]]; then export db_host=127.0.0.1 db_user=postgres db_pass=postgres db_name=cakephp_test; fi
-          vendor/bin/phpunit
+          vendor/bin/phpunit --coverage-clover=clover.xml
+          bash <(curl -s https://codecov.io/bash)
