@@ -23,6 +23,8 @@ jobs:
         if: matrix.db-type == 'pgsql'
         run: docker run --rm --name=postgres -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=cakephp_test -p 5432:5432 -d postgres
 
+      - uses: actions/checkout@v1
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
