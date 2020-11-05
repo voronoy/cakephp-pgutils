@@ -1,10 +1,7 @@
 <?php
-/**
- * Copyright 2020 PulseCaster, Inc dba Serious Development. All Rights Reserved
- */
+declare(strict_types=1);
 
 namespace Voronoy\PgUtils\Database\Type;
-
 
 use Cake\Database\DriverInterface;
 use function Voronoy\PgUtils\parse_pg_array;

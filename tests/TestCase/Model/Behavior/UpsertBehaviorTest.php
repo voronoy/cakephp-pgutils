@@ -24,7 +24,7 @@ class UpsertBehaviorTest extends TestCase
         $this->getTableLocator()->clear();
         $this->Articles = $this->getTableLocator()->get('Voronoy/PgUtils.Articles');
         $this->Articles->addBehavior('Voronoy/PgUtils.Upsert', [
-            'uniqueKey'     => ['external_id', 'author_id'],
+            'uniqueKey' => ['external_id', 'author_id'],
             'updateColumns' => ['title', 'body'],
         ]);
     }
@@ -39,8 +39,8 @@ class UpsertBehaviorTest extends TestCase
             ['id' => null, 'title' => 'Article 5'],
         ];
         $this->Articles->bulkUpsert($records1, [
-            'uniqueKey'     => ['id'],
-            'updateColumns' => ['title']
+            'uniqueKey' => ['id'],
+            'updateColumns' => ['title'],
         ]);
         $this->assertEquals(5, $this->Articles->find()->count());
         $this->assertEquals('Article 1 Mod', $this->Articles->get(1)->title);

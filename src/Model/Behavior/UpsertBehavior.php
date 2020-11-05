@@ -22,9 +22,16 @@ class UpsertBehavior extends Behavior
     /**
      * Execute bulk upsert query.
      *
+     * The options array accept the following keys:
+     *
+     * - uniqueKey: List of fields which defines unique key.
+     * - updateColumns: List of fields that will be updated on conflict.
+     * - extra: Extra fields which will be appended to data.
+     * - returning: List of fields that will be returned in statement. If empty, method returns the number of rows changed.
+     *
      * @param array $data    Upsert data
      * @param array $options Options
-     * @return int|\Cake\Database\StatementInterface|null Returns the row count of records changed, database statement or null.
+     * @return int|\Cake\Database\StatementInterface|null Returns the number of rows changed, database statement or null.
      */
     public function bulkUpsert(array $data, array $options = [])
     {
