@@ -1,4 +1,4 @@
-# CakePHP PgUtils
+# CakePHP PgUtils Plugin
 
 ![CakePHP PgUtils CI](https://github.com/voronoy/cakephp-pgutils/workflows/CakePHP%20PgUtils%20CI/badge.svg)
 [![Build Status](https://img.shields.io/travis/voronoy/cakephp-pgutils?style=flat)](https://travis-ci.org/github/voronoy/cakephp-pgutils)
@@ -7,13 +7,24 @@
 
 Provides Common PostgreSQL Types for CakePHP ORM.
 
-### Installation
+## Installation
 
 ```bash
 composer require voronoy/cakephp-pgutils
 ```
 
+## What is this plugin for?
 
-### License
+### Database Types
+
+- Array
+- MacAddr
+- Inet
+
+### Behaviors
+
+- Upsert Behavior
+
+## License
 
 Licensed under the MIT License.

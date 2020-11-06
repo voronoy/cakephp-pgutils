@@ -36,10 +36,7 @@ class ArrayType extends BaseType implements BatchCastingInterface
     }
 
     /**
-     * Marshals flat data into PHP objects.
-     *
-     * @param mixed $value The value to convert.
-     * @return array|null Converted value.
+     * @inheritDoc
      */
     public function marshal($value)
     {

@@ -12,6 +12,7 @@ class NetworksTable extends Table
     {
         $schema->setColumnType('mac', 'macaddr');
         $schema->setColumnType('mac8', 'macaddr8');
+        $schema->setColumnType('ip', 'inet');
 
         return $schema;
     }

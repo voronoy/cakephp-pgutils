@@ -1,3 +1,5 @@
+sudo: true
+
 language: php
 
 php:
@@ -6,8 +8,16 @@ php:
 services:
   - postgresql
 
+addons:
+  postgresql: '10'
+  apt:
+    packages:
+      - postgresql-10
+      - postgresql-client-10
+
 env:
   global:
+    - PGPORT=5433
     - DB=pgsql db_host='127.0.0.1' db_user=postgres db_name=cakephp_test
     - DEFAULT=1
 
