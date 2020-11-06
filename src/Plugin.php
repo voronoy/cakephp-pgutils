@@ -19,7 +19,7 @@ class Plugin extends BasePlugin
      *
      * @var bool
      */
-    protected $bootstrapEnabled = false;
+    protected $bootstrapEnabled = true;
 
     /**
      * Load routes or not

@@ -38,10 +38,10 @@ function parse_pg_array(?string $data, ?callable $processor = null): ?array
         return $return;
     } else {
         $parsed = str_getcsv(trim($data, '{}'));
-        $parsedWithNulls = str_getcsv(trim($data, '{}'), ',', "\u{2007}");
+        $checkNulls = str_getcsv(trim($data, '{}'), ',', "\u{2007}");
         $return = [];
         foreach ($parsed as $i => $value) {
-            if ($value === 'NULL' && $parsedWithNulls[$i] === 'NULL') {
+            if ($value === 'NULL' && $checkNulls[$i] === 'NULL') {
                 $return[] = null;
             } elseif (is_callable($processor)) {
                 $return[] = call_user_func($processor, $value);

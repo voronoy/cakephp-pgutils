@@ -8,7 +8,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 class ArraysFixture extends TestFixture
 {
-
     public $fields = [
         'id' => ['type' => 'integer', 'autoIncrement' => true],
         'txt1' => ['type' => 'string', 'null' => true],
@@ -38,6 +37,4 @@ class ArraysFixture extends TestFixture
 
         return false;
     }
-
-
 }

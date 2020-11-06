@@ -5,9 +5,6 @@ namespace Voronoy\PgUtils\Test\TestCase\Database\Type;
 
 use Cake\Database\Type;
 use Cake\TestSuite\TestCase;
-use Voronoy\PgUtils\Database\Type\ArrayType;
-use Voronoy\PgUtils\Database\Type\FloatArrayType;
-use Voronoy\PgUtils\Database\Type\IntArrayType;
 use Voronoy\PgUtils\Test\TestApp\Model\Table\ArraysTable;
 use function Voronoy\PgUtils\parse_pg_array;
 
@@ -26,9 +23,6 @@ class ArrayTypeTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        Type::map('array', ArrayType::class);
-        Type::map('int_array', IntArrayType::class);
-        Type::map('float_array', FloatArrayType::class);
         $this->getTableLocator()->clear();
         $this->Arrays = $this->getTableLocator()->get('Arrays',
             [
