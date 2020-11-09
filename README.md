@@ -17,8 +17,8 @@ composer require voronoy/cakephp-pgutils
 
 ### Database Types
 
-- Array
-- MacAddr
+- Array (including multidimensional arrays)
+- MacAddr, MacAddr8
 - Inet
 
 ### Behaviors
