@@ -14,6 +14,8 @@ class ArraysTable extends Table
         $schema->setColumnType('txt1', 'array');
         $schema->setColumnType('txt2', 'array');
         $schema->setColumnType('int1', 'int_array');
+        $schema->setColumnType('f1', 'float_array');
+        $schema->setColumnType('bool1', 'bool_array');
 
         return $schema;
     }

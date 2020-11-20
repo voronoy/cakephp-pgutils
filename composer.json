@@ -34,9 +34,6 @@
     "cakephp/cakephp-codesniffer": "^4.2"
   },
   "autoload": {
-    "files": [
-      "src/functions.php"
-    ],
     "psr-4": {
       "Voronoy\\PgUtils\\": "src"
     }

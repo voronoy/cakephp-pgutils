@@ -5,8 +5,9 @@ namespace Voronoy\PgUtils\Test\TestCase\Database\Type;
 
 use Cake\Database\Type;
 use Cake\TestSuite\TestCase;
+use Voronoy\PgUtils\Exception\PgArrayInvalidParam;
 use Voronoy\PgUtils\Test\TestApp\Model\Table\ArraysTable;
-use function Voronoy\PgUtils\parse_pg_array;
+use Voronoy\PgUtils\Utility\PgArrayConverter;
 
 class ArrayTypeTest extends TestCase
 {
@@ -43,9 +44,21 @@ class ArrayTypeTest extends TestCase
         $this->assertTrue(is_array($first->txt2));
         $this->assertEquals(2, count($first->txt2));
         $this->assertEquals('"q', $first->txt2[1][0][0]);
+
+        $this->assertTrue(is_array($first->bool1));
+        $this->assertEquals([true, false, true, false, null, false, true], $first->bool1);
+        $this->assertEquals([1.21, 2.0, 3], $first->f1);
+
         $first->txt1 = ['update', 'with \'new values\''];
         $first->txt2 = [[['update', null]]];
+        $first->int1 = ['12.34', 11];
+        $first->f1 = ['12.34', 11];
+        $first->bool1 = [true, false, null, 1, 0, 'false', '', 'True'];
         $this->Arrays->save($first);
+        $first = $this->Arrays->find()->first();
+        $this->assertEquals([true, false, null, true, false, false, false, true], $first->bool1);
+        $this->assertEquals([12.34, 11], $first->f1);
+        $this->assertEquals([12, 11], $first->int1);
 
         $second = $this->Arrays->newEntity([
             'txt1' => ['aa', 'bb'],
@@ -59,11 +72,34 @@ class ArrayTypeTest extends TestCase
     public function testNull()
     {
         $nulls = '{NULL,"null","","NULL"}';
-        $actual = parse_pg_array($nulls);
+        $actual = PgArrayConverter::fromPg($nulls);
         $this->assertNull($actual[0]);
+        $this->assertNull(PgArrayConverter::boolToPg(null));
         $this->assertEquals('null', $actual[1]);
         $this->assertEquals('', $actual[2]);
         $this->assertEquals('NULL', $actual[3]);
+    }
+
+    public function testIntExceptions()
+    {
+        $this->expectException(PgArrayInvalidParam::class);
+        PgArrayConverter::toPg(['f'], 'int');
+        $this->expectException(PgArrayInvalidParam::class);
+        PgArrayConverter::toPg(['f'], 'float');
+        $this->expectException(PgArrayInvalidParam::class);
+        PgArrayConverter::toPg(['f',null], 'bool');
+    }
+
+    public function testFloatExceptions()
+    {
+        $this->expectException(PgArrayInvalidParam::class);
+        PgArrayConverter::toPg(['f'], 'float');
+    }
+
+    public function testBoolExceptions()
+    {
+        $this->expectException(PgArrayInvalidParam::class);
+        PgArrayConverter::toPg(['invalid'], 'bool');
     }
 
     public function testManyToPHP()

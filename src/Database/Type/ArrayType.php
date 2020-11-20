@@ -6,11 +6,15 @@ namespace Voronoy\PgUtils\Database\Type;
 use Cake\Database\DriverInterface;
 use Cake\Database\Type\BaseType;
 use Cake\Database\Type\BatchCastingInterface;
-use function Voronoy\PgUtils\parse_pg_array;
-use function Voronoy\PgUtils\to_pg_array;
+use Voronoy\PgUtils\Utility\PgArrayConverter;
 
 class ArrayType extends BaseType implements BatchCastingInterface
 {
+    /**
+     * @var string
+     */
+    protected string $type = 'text';
+
     /**
      * Convert array data into the database format.
      *
@@ -20,7 +24,7 @@ class ArrayType extends BaseType implements BatchCastingInterface
      */
     public function toDatabase($value, DriverInterface $driver)
     {
-        return to_pg_array($value);
+        return PgArrayConverter::toPg($value, $this->type);
     }
 
     /**
@@ -32,7 +36,7 @@ class ArrayType extends BaseType implements BatchCastingInterface
      */
     public function toPHP($value, DriverInterface $driver)
     {
-        return parse_pg_array($value);
+        return PgArrayConverter::fromPg($value, $this->type);
     }
 
     /**
@@ -56,7 +60,7 @@ class ArrayType extends BaseType implements BatchCastingInterface
             if (!isset($values[$field]) || is_array($values[$field])) {
                 continue;
             }
-            $values[$field] = parse_pg_array($values[$field]);
+            $values[$field] = PgArrayConverter::fromPg($values[$field], $this->type);
         }
 
         return $values;
