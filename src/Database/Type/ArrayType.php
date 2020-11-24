@@ -21,6 +21,7 @@ class ArrayType extends BaseType implements BatchCastingInterface
      * @param mixed                          $value  The value to convert.
      * @param \Cake\Database\DriverInterface $driver The driver instance to convert with.
      * @return string|null
+     * @throws \Voronoy\PgUtils\Exception\PgArrayInvalidParam
      */
     public function toDatabase($value, DriverInterface $driver)
     {

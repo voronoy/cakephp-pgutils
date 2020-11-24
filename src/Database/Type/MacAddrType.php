@@ -25,7 +25,7 @@ class MacAddrType extends BaseType
             return $value;
         }
         // 000000:000000 or 000000-000000
-        if (preg_match('/^([0-9A-Fa-f]{6})(:|-)([0-9A-Fa-f]{6})$/', $value)) {
+        if (preg_match('/^([0-9A-Fa-f]{6})([:\-])([0-9A-Fa-f]{6})$/', $value)) {
             return $value;
         }
         // 0000.0000.0000

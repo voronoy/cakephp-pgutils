@@ -24,7 +24,7 @@ class UpsertBehavior extends Behavior
      *
      * The options array accept the following keys:
      *
-     * - uniqueKey: List of fields which defines unique key.
+     * - uniqueKey: List of fields which defines unique key. If not in $options or behavior config, primary key is used.
      * - updateColumns: List of fields that will be updated on conflict.
      * - extra: Extra fields which will be appended to data.
      * - returning: List of fields that will be returned in statement. If empty, method returns the number of rows changed.
