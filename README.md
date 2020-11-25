@@ -31,6 +31,7 @@ bin/cake plugin load Voronoy/PgUtils
     - `bool_array`
 - MacAddr, MacAddr8
 - Inet
+- GeoPoint
 
 #### Usage
 
