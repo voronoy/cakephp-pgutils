@@ -24,14 +24,17 @@ bin/cake plugin load Voronoy/PgUtils
 
 ### Database Types
 
-- Array (including multidimensional arrays):
+- Array Types (including multidimensional arrays):
     - `array`
     - `int_array`
     - `float_array`
     - `bool_array`
-- MacAddr, MacAddr8
-- Inet
-- GeoPoint
+- Network Address Types:
+    - `macaddr`
+    - `macaddr8`
+    - `inet`
+- PostGIS Geometry/Geography Types:
+    - `geo_point`
 
 #### Usage
 
@@ -40,13 +43,18 @@ You can use the custom types by mapping the types in your Table’s `_initialize
 ```php
 protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
 {
+    // Array Types
     $schema->setColumnType('txt_arr', 'array');
     $schema->setColumnType('int_arr', 'int_array');
     $schema->setColumnType('float_arr', 'float_array');
     $schema->setColumnType('bool_arr', 'bool_array');
+    // Network Address Types
     $schema->setColumnType('mac', 'macaddr');
     $schema->setColumnType('mac8', 'macaddr8');
     $schema->setColumnType('ip', 'inet');
+    // PostGIS Geometry/Geography Types
+    $schema->setColumnType('pt', 'geo_point');
+
     return $schema;
 }
 ```

@@ -1,6 +1,6 @@
 {
   "name": "voronoy/cakephp-pgutils",
-  "description": "CakePHP plugin with useful PostgreSQL functionality ",
+  "description": "Provides Common PostgreSQL Types and Bulk Upsert Behavior for CakePHP ORM.",
   "type": "cakephp-plugin",
   "keywords": [
     "cakephp",
@@ -25,6 +25,7 @@
   },
   "require": {
     "php": ">=7.2.0",
+    "ext-json": "*",
     "cakephp/orm": "^4.0"
   },
   "require-dev": {

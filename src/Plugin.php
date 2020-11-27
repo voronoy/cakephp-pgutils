@@ -33,7 +33,7 @@ class Plugin extends BasePlugin
      *
      * @var bool
      */
-    protected $middlewareEnabled = true;
+    protected $middlewareEnabled = false;
 
     /**
      * Console middleware

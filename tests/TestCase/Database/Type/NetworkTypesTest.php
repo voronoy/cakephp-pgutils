@@ -28,7 +28,7 @@ class NetworkTypesTest extends TestCase
      *
      * @var string[]
      */
-    public $fixtures = ['plugin.Voronoy/PgUtils.Networks'];
+    protected $fixtures = ['plugin.Voronoy/PgUtils.Networks'];
 
     public function setUp(): void
     {

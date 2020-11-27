@@ -8,7 +8,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 class GeosFixture extends TestFixture
 {
-
     public $fields = [
         'id' => ['type' => 'integer', 'autoIncrement' => false],
         'pt' => ['type' => 'string', 'null' => true],

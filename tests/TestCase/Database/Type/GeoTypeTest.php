@@ -14,7 +14,7 @@ class GeoTypeTest extends TestCase
 {
     public GeosTable $Geo;
 
-    public $fixtures = ['plugin.Voronoy/PgUtils.Geos'];
+    protected $fixtures = ['plugin.Voronoy/PgUtils.Geos'];
 
     public function setUp(): void
     {
@@ -33,6 +33,7 @@ class GeoTypeTest extends TestCase
         $this->assertTrue($first->pt instanceof GeoPoint);
         $this->assertEquals(-118.146251, $first->pt->lng());
         $this->assertEquals(33.82928, $first->pt->lat());
+        $this->assertEquals('{"id":1,"pt":{"lng":-118.146251,"lat":33.82928}}', json_encode($first));
         $this->assertNull($second->pt);
 
         $lng = -118.017946;

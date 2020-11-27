@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Voronoy\PgUtils\Database;
 
-class GeoPoint
+class GeoPoint implements \JsonSerializable
 {
     protected float $_lng;
     protected float $_lat;
@@ -51,5 +51,18 @@ class GeoPoint
     public function lng()
     {
         return $this->_lng;
+    }
+
+    /**
+     * Serialize to JSON.
+     *
+     * @return array
+     */
+    public function jsonSerialize()
+    {
+        return [
+            'lng' => $this->_lng,
+            'lat' => $this->_lat,
+        ];
     }
 }

@@ -7,7 +7,6 @@ use Cake\TestSuite\Fixture\TestFixture;
 
 class ArticlesFixture extends TestFixture
 {
-
     public $fields = [
         'id' => ['type' => 'integer', 'autoIncrement' => true],
         'external_id' => ['type' => 'integer'],
@@ -17,7 +16,7 @@ class ArticlesFixture extends TestFixture
         'created' => 'datetime',
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
-            'unique' => ['type' => 'unique', 'columns' => ['external_id', 'author_id']]
+            'unique' => ['type' => 'unique', 'columns' => ['external_id', 'author_id']],
         ],
     ];
 
@@ -44,5 +43,4 @@ class ArticlesFixture extends TestFixture
             'created' => '2017-09-01 00:00:00',
         ],
     ];
-
 }

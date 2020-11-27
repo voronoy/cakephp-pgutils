@@ -19,7 +19,7 @@ class ArrayTypeTest extends TestCase
      *
      * @var string[]
      */
-    public $fixtures = ['plugin.Voronoy/PgUtils.Arrays'];
+    protected $fixtures = ['plugin.Voronoy/PgUtils.Arrays'];
 
     public function setUp(): void
     {

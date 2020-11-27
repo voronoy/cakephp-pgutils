@@ -66,6 +66,9 @@ class GeoPointType extends BaseType implements ExpressionTypeInterface
             $lat = null;
         }
 
-        return new FunctionExpression('ST_MakePoint', [$lng, $lat]);
+        return new FunctionExpression('ST_SetSRID', [
+            new FunctionExpression('ST_Point', [$lng, $lat]),
+            4326,
+        ]);
     }
 }

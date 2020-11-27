@@ -8,7 +8,6 @@ use Cake\TestSuite\TestCase;
 
 class UpsertBehaviorTest extends TestCase
 {
-
     public Table $Articles;
 
     /**
@@ -16,7 +15,7 @@ class UpsertBehaviorTest extends TestCase
      *
      * @var string[]
      */
-    public $fixtures = ['plugin.Voronoy/PgUtils.Articles'];
+    protected $fixtures = ['plugin.Voronoy/PgUtils.Articles'];
 
     public function setUp(): void
     {
@@ -34,7 +33,7 @@ class UpsertBehaviorTest extends TestCase
         $result = $this->Articles->bulkUpsert([]);
         $this->assertNull($result);
         $records1 = [
-            ['id' => 1, 'title' => 'Article 1 Mod'],
+            ['id' => 1, 'title' => 'Article 1 Mod', 'invalid_field1' => 12],
             ['title' => 'Article 4'],
             ['id' => null, 'title' => 'Article 5'],
         ];
@@ -64,7 +63,14 @@ class UpsertBehaviorTest extends TestCase
             ['id' => 1, 'title' => 'Article 1 Mod 3'],
         ]);
         $this->assertEquals(6, $this->Articles->find()->count());
+
+        $this->Articles->bulkUpsert($records1, [
+            'uniqueKey' => ['id'],
+            'updateColumns' => ['title', 'invalid_field1'],
+            'extra' => ['external_id' => 10, 'invalid_field2' => 10],
+        ]);
+        $first = $this->Articles->get(1);
+        $this->assertEquals('Article 1 Mod', $first->title);
+        $this->assertEquals(10, $first->external_id);
     }
-
-
 }

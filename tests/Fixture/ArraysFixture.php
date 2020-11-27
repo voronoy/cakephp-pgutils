@@ -19,6 +19,7 @@ class ArraysFixture extends TestFixture
             'primary' => ['type' => 'primary', 'columns' => ['id']],
         ],
     ];
+
     public $records = [
         [
             'txt1' => '{blah,blah blah,123,"",NULL}',

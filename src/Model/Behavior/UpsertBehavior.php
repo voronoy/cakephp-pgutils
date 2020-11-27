@@ -58,7 +58,13 @@ class UpsertBehavior extends Behavior
                                          ->bind(':id', $primaryKey)
                                          ->first()->sequence ?? null;
         }
-
+        $tableColumns = $this->_table->getSchema()->columns();
+        $updateColumns = array_filter($updateColumns, function ($column) use ($tableColumns) {
+            return in_array($column, $tableColumns);
+        });
+        $extra = array_filter($extra, function ($column) use ($tableColumns) {
+            return in_array($column, $tableColumns);
+        }, ARRAY_FILTER_USE_KEY);
         $fields = array_filter(
             array_keys(reset($data)),
             function ($key) use ($updateColumns) {
@@ -68,6 +74,9 @@ class UpsertBehavior extends Behavior
         $fields = array_unique(array_merge($uniqueKey, $fields, array_keys($extra)));
         $updateValues = [];
         foreach ($updateColumns as $column) {
+            array_push($updateValues, "{$column} = EXCLUDED.{$column}");
+        }
+        foreach ($extra as $column => $value) {
             array_push($updateValues, "{$column} = EXCLUDED.{$column}");
         }
         $conflictKey = implode(',', $uniqueKey);
