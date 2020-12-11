@@ -8,7 +8,6 @@ use Voronoy\PgUtils\Test\TestApp\Model\Table\NetworksTable;
 
 class NetworkTypesTest extends TestCase
 {
-
     public NetworksTable $Networks;
 
     private $records = [
@@ -34,10 +33,12 @@ class NetworkTypesTest extends TestCase
     {
         parent::setUp();
         $this->getTableLocator()->clear();
-        $this->Networks = $this->getTableLocator()->get('Networks',
+        $this->Networks = $this->getTableLocator()->get(
+            'Networks',
             [
                 'className' => 'Voronoy\PgUtils\Test\TestApp\Model\Table\NetworksTable',
-            ]);
+            ]
+        );
     }
 
     public function testMacaddrTypes()

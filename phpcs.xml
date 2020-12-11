@@ -3,6 +3,4 @@
     <config name="installed_paths" value="vendor/cakephp/cakephp-codesniffer/CakePHP"/>
 
     <rule ref="CakePHP"/>
-
-    <exclude-pattern>*/tests/comparisons/*</exclude-pattern>
 </ruleset>

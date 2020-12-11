@@ -14,6 +14,7 @@ class ArticlesFixture extends TestFixture
         'title' => ['type' => 'string', 'length' => 255, 'null' => true],
         'body' => 'text',
         'created' => 'datetime',
+        'modified' => 'datetime',
         '_constraints' => [
             'primary' => ['type' => 'primary', 'columns' => ['id']],
             'unique' => ['type' => 'unique', 'columns' => ['external_id', 'author_id']],
@@ -27,6 +28,7 @@ class ArticlesFixture extends TestFixture
             'title' => 'Article 1',
             'body' => 'Article 1 Body',
             'created' => '2017-09-01 00:00:00',
+            'modified' => '2017-09-01 00:00:00',
         ],
         [
             'external_id' => 2,
@@ -34,6 +36,7 @@ class ArticlesFixture extends TestFixture
             'title' => 'Article 2',
             'body' => 'Article 2 Body',
             'created' => '2017-09-01 00:00:00',
+            'modified' => '2017-09-01 00:00:00',
         ],
         [
             'external_id' => 3,
@@ -41,6 +44,7 @@ class ArticlesFixture extends TestFixture
             'title' => 'Article 3',
             'body' => 'Article 3 Body',
             'created' => '2017-09-01 00:00:00',
+            'modified' => '2017-09-01 00:00:00',
         ],
     ];
 }

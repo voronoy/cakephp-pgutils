@@ -8,7 +8,6 @@ use Cake\ORM\Table;
 
 class GeosTable extends Table
 {
-
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
         $schema->setColumnType('pt', 'geo_point');

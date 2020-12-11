@@ -1,10 +1,7 @@
 <?php
-/**
- * Copyright 2020 PulseCaster, Inc dba Serious Development. All Rights Reserved
- */
+declare(strict_types=1);
 
 namespace Voronoy\PgUtils\Test\TestCase\Database\Type;
-
 
 use Cake\TestSuite\TestCase;
 use Voronoy\PgUtils\Database\GeoPoint;
@@ -20,10 +17,12 @@ class GeoTypeTest extends TestCase
     {
         parent::setUp();
         $this->getTableLocator()->clear();
-        $this->Geo = $this->getTableLocator()->get('Geos',
+        $this->Geo = $this->getTableLocator()->get(
+            'Geos',
             [
                 'className' => 'Voronoy\PgUtils\Test\TestApp\Model\Table\GeosTable',
-            ]);
+            ]
+        );
     }
 
     public function testPoint()

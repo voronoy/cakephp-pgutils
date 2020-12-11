@@ -45,7 +45,7 @@
     }
   },
   "scripts": {
-    "cs-check": "phpcs --colors -p src/",
+    "cs-check": "phpcs --colors -p src/ tests/",
     "test": "phpunit"
   },
   "config": {

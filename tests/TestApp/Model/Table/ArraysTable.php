@@ -8,7 +8,6 @@ use Cake\ORM\Table;
 
 class ArraysTable extends Table
 {
-
     protected function _initializeSchema(TableSchemaInterface $schema): TableSchemaInterface
     {
         $schema->setColumnType('txt1', 'array');
@@ -19,5 +18,4 @@ class ArraysTable extends Table
 
         return $schema;
     }
-
 }

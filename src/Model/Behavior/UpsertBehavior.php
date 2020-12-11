@@ -25,7 +25,7 @@ class UpsertBehavior extends Behavior
      * The options array accept the following keys:
      *
      * - uniqueKey: List of fields which defines unique key. If not in $options or behavior config, primary key is used.
-     * - updateColumns: List of fields that will be updated on conflict.
+     * - updateColumns: List of fields that will be updated on conflict. Pass `*` to set all table columns.
      * - extra: Extra fields which will be appended to data.
      * - returning: List of fields that will be returned in statement. If empty, method returns the number of rows changed.
      *
@@ -40,16 +40,20 @@ class UpsertBehavior extends Behavior
         }
         $primaryKey = $this->_table->getPrimaryKey();
         $options += [
-            'uniqueKey' => $this->getConfig('uniqueKey', (array)$primaryKey),
+            'uniqueKey' => $this->getConfig('uniqueKey', $primaryKey),
             'updateColumns' => $this->getConfig('updateColumns', []),
             'extra' => [],
             'returning' => [],
         ];
 
-        $uniqueKey = $options['uniqueKey'];
+        $tableColumns = $this->_table->getSchema()->columns();
+        $uniqueKey = (array)$options['uniqueKey'];
         $updateColumns = $options['updateColumns'];
         $extra = $options['extra'];
         $returning = $options['returning'];
+        if ($updateColumns === '*') {
+            $updateColumns = array_diff($tableColumns, $uniqueKey);
+        }
         $sequenceName = null;
         if (count($uniqueKey) === 1 && reset($uniqueKey) === $primaryKey) {
             $sequenceName = $this->_table->find()
@@ -58,15 +62,18 @@ class UpsertBehavior extends Behavior
                                          ->bind(':id', $primaryKey)
                                          ->first()->sequence ?? null;
         }
-        $tableColumns = $this->_table->getSchema()->columns();
-        $updateColumns = array_filter($updateColumns, function ($column) use ($tableColumns) {
+        $updateColumns = array_filter((array)$updateColumns, function ($column) use ($tableColumns) {
             return in_array($column, $tableColumns);
         });
         $extra = array_filter($extra, function ($column) use ($tableColumns) {
             return in_array($column, $tableColumns);
         }, ARRAY_FILTER_USE_KEY);
+        $fields = [];
+        foreach ($data as $row) {
+            $fields = array_flip(array_flip(array_merge($fields, array_keys($row))));
+        }
         $fields = array_filter(
-            array_keys(reset($data)),
+            $fields,
             function ($key) use ($updateColumns) {
                 return in_array($key, $updateColumns);
             }
@@ -74,9 +81,6 @@ class UpsertBehavior extends Behavior
         $fields = array_unique(array_merge($uniqueKey, $fields, array_keys($extra)));
         $updateValues = [];
         foreach ($updateColumns as $column) {
-            array_push($updateValues, "{$column} = EXCLUDED.{$column}");
-        }
-        foreach ($extra as $column => $value) {
             array_push($updateValues, "{$column} = EXCLUDED.{$column}");
         }
         $conflictKey = implode(',', $uniqueKey);
@@ -103,7 +107,7 @@ class UpsertBehavior extends Behavior
                 },
                 ARRAY_FILTER_USE_KEY
             );
-            $values = array_merge($filtered, $extra);
+            $values = array_merge($extra, $filtered);
             if ($sequenceName && in_array($primaryKey, $fields) && empty($values[$primaryKey])) {
                 $values[$primaryKey] = new FunctionExpression('nextval', [$sequenceName]);
             }

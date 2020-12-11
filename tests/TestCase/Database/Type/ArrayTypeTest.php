@@ -11,7 +11,6 @@ use Voronoy\PgUtils\Utility\PgArrayConverter;
 
 class ArrayTypeTest extends TestCase
 {
-
     public ArraysTable $Arrays;
 
     /**
@@ -25,10 +24,9 @@ class ArrayTypeTest extends TestCase
     {
         parent::setUp();
         $this->getTableLocator()->clear();
-        $this->Arrays = $this->getTableLocator()->get('Arrays',
-            [
-                'className' => 'Voronoy\PgUtils\Test\TestApp\Model\Table\ArraysTable',
-            ]);
+        $this->Arrays = $this->getTableLocator()->get('Arrays', [
+            'className' => 'Voronoy\PgUtils\Test\TestApp\Model\Table\ArraysTable',
+        ]);
     }
 
     public function testArray()
@@ -87,7 +85,7 @@ class ArrayTypeTest extends TestCase
         $this->expectException(PgArrayInvalidParam::class);
         PgArrayConverter::toPg(['f'], 'float');
         $this->expectException(PgArrayInvalidParam::class);
-        PgArrayConverter::toPg(['f',null], 'bool');
+        PgArrayConverter::toPg(['f', null], 'bool');
     }
 
     public function testFloatExceptions()
@@ -173,5 +171,4 @@ class ArrayTypeTest extends TestCase
         $this->assertTrue(is_float($actual['b'][1]));
         $this->assertEquals([3.1415], $type->toPHP('{3.1415000}', $driver));
     }
-
 }

@@ -16,5 +16,4 @@ class NetworksTable extends Table
 
         return $schema;
     }
-
 }
