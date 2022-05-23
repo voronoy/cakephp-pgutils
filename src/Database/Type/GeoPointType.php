@@ -33,7 +33,10 @@ class GeoPointType extends BaseType implements ExpressionTypeInterface
     }
 
     /**
-     * @inheritDoc
+     * Marshals flat data into GeoPoint object.
+     *
+     * @param mixed $value The value to convert.
+     * @return \Voronoy\PgUtils\Database\GeoPoint|null Converted value.
      */
     public function marshal($value)
     {
@@ -58,6 +61,7 @@ class GeoPointType extends BaseType implements ExpressionTypeInterface
      */
     public function toExpression($value): ExpressionInterface
     {
+        $value = $this->marshal($value);
         if ($value instanceof GeoPoint) {
             $lng = $value->lng();
             $lat = $value->lat();
