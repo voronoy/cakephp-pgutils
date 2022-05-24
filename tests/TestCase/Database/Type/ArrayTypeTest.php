@@ -6,12 +6,14 @@ namespace Voronoy\PgUtils\Test\TestCase\Database\Type;
 use Cake\Database\Type;
 use Cake\TestSuite\TestCase;
 use Voronoy\PgUtils\Exception\PgArrayInvalidParam;
-use Voronoy\PgUtils\Test\TestApp\Model\Table\ArraysTable;
 use Voronoy\PgUtils\Utility\PgArrayConverter;
 
 class ArrayTypeTest extends TestCase
 {
-    public ArraysTable $Arrays;
+    /**
+     * @var \Voronoy\PgUtils\Test\TestApp\Model\Table\ArraysTable
+     */
+    public $Arrays;
 
     /**
      * Fixtures used by this test case.

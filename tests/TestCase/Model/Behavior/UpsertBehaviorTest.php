@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace Voronoy\PgUtils\Test\TestCase\Model\Behavior;
 
 use Cake\I18n\FrozenTime;
-use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 
 class UpsertBehaviorTest extends TestCase
 {
-    public Table $Articles;
+    /**
+     * @var \Cake\ORM\Table
+     */
+    public $Articles;
 
     /**
      * Fixtures used by this test case.

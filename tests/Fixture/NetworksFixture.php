@@ -18,6 +18,9 @@ class NetworksFixture extends TestFixture
         ],
     ];
 
+    /**
+     * @inheritDoc
+     */
     public function create(ConnectionInterface $db): bool
     {
         if (parent::create($db)) {

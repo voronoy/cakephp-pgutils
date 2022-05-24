@@ -5,11 +5,13 @@ namespace Voronoy\PgUtils\Test\TestCase\Database\Type;
 
 use Cake\TestSuite\TestCase;
 use Voronoy\PgUtils\Database\GeoPoint;
-use Voronoy\PgUtils\Test\TestApp\Model\Table\GeosTable;
 
 class GeoTypeTest extends TestCase
 {
-    public GeosTable $Geo;
+    /**
+     * @var \Voronoy\PgUtils\Test\TestApp\Model\Table\GeosTable
+     */
+    public $Geo;
 
     protected $fixtures = ['plugin.Voronoy/PgUtils.Geos'];
 
