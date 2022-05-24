@@ -41,4 +41,7 @@ $dbConfig = [
     'cacheMetadata' => false,
 ];
 ConnectionManager::drop('test');
+ConnectionManager::drop('test_cached');
 ConnectionManager::setConfig('test', $dbConfig);
+$dbConfig['cacheMetadata'] = true;
+ConnectionManager::setConfig('test_cached', $dbConfig);

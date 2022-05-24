@@ -26,10 +26,10 @@
   "require": {
     "php": ">=7.2.0",
     "ext-json": "*",
+    "ext-pdo": "*",
     "cakephp/orm": "^4.0"
   },
   "require-dev": {
-    "ext-pdo": "*",
     "cakephp/cakephp": "^4.0",
     "cakephp/cakephp-codesniffer": "^4.2",
     "phpunit/phpunit": "~8.5.0"
@@ -49,6 +49,9 @@
     "test": "phpunit"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }
