@@ -34,7 +34,7 @@ class UpsertBehaviorTest extends TestCase
     public function testUpsert()
     {
         $result = $this->Articles->bulkUpsert([]);
-        $this->assertNull($result);
+        $this->assertEquals(0, $result);
         $records1 = [
             ['id' => 1, 'title' => 'Article 1 Mod', 'invalid_field1' => 12],
             ['title' => 'Article 4'],

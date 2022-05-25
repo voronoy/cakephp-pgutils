@@ -38,7 +38,7 @@ class GeoPointType extends BaseType implements ExpressionTypeInterface
      * @param mixed $value The value to convert.
      * @return \Voronoy\PgUtils\Database\GeoPoint|null Converted value.
      */
-    public function marshal($value)
+    public function marshal($value): ?GeoPoint
     {
         if ($value instanceof GeoPoint) {
             return $value;

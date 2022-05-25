@@ -81,7 +81,7 @@ class MaterializedViewCollection extends Collection
             s.nspname AS schema,
             a.attname AS name,
             pg_catalog.format_type(a.atttypid, a.atttypmod) AS type,
-            case when a.attnotnull is null then \'YES\' else \'NO\' end AS "null",
+            case when a.attnotnull then \'YES\' else \'NO\' end AS "null",
             null AS "default",
             null AS collation_name,
             null AS comment,

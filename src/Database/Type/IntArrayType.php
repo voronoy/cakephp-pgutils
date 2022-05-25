@@ -8,5 +8,5 @@ class IntArrayType extends ArrayType
     /**
      * @var string
      */
-    protected string $type = 'int';
+    protected $type = 'int';
 }

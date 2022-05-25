@@ -59,6 +59,7 @@ class ArticlesFixture extends TestFixture
             'INSERT INTO matview_data SELECT 1, random() FROM generate_series(1, 500);',
             'INSERT INTO matview_data SELECT 2, random() FROM generate_series(1, 500);',
             'CREATE MATERIALIZED VIEW mat_view AS SELECT grp, avg(data), count(*) FROM matview_data GROUP BY 1;',
+            'CREATE MATERIALIZED VIEW mat_view2 AS SELECT grp, avg(data), count(*) FROM matview_data GROUP BY 1;',
         ];
         if (parent::create($db)) {
             foreach ($sqls as $sql) {
@@ -78,6 +79,7 @@ class ArticlesFixture extends TestFixture
     {
         $sqls = [
             'DROP MATERIALIZED VIEW mat_view;',
+            'DROP MATERIALIZED VIEW mat_view2;',
             'DROP TABLE matview_data;',
         ];
         foreach ($sqls as $sql) {
