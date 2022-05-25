@@ -11,7 +11,7 @@ class PgArrayConverter
      * Convert PostgreSQL array to PHP array.
      *
      * @param string|null $data Data to convert
-     * @param string      $type Array type
+     * @param string $type Array type
      * @return array|null
      */
     public static function fromPg(?string $data, string $type = 'text'): ?array
@@ -80,7 +80,7 @@ class PgArrayConverter
      * Convert PHP array to PostgreSQL array.
      *
      * @param array|null $data Data to convert
-     * @param string     $type Array type
+     * @param string $type Array type
      * @return string|null
      * @throws \Voronoy\PgUtils\Exception\PgArrayInvalidParam
      */

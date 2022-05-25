@@ -29,7 +29,7 @@ class UpsertBehavior extends Behavior
      * - extra: Extra fields which will be appended to data.
      * - returning: List of fields that will be returned in statement. If empty, method returns the number of rows changed.
      *
-     * @param array $data    Upsert data
+     * @param array $data Upsert data
      * @param array $options Options
      * @return int|\Cake\Database\StatementInterface|null Returns the number of rows changed, database statement or null.
      */

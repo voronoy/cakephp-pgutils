@@ -11,7 +11,7 @@ trim_trailing_whitespace = true
 ij_continuation_indent_size = 4
 ij_visual_guides = 100,120
 
-[{*.json, *.yml}]
+[{*.json, *.yml, *.md}]
 indent_size = 2
 
 [*.php]
