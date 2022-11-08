@@ -5,8 +5,14 @@ namespace Voronoy\PgUtils\Database;
 
 class GeoPoint implements \JsonSerializable
 {
-    protected float $_lng;
-    protected float $_lat;
+    /**
+     * @var float
+     */
+    protected $_lng;
+    /**
+     * @var float
+     */
+    protected $_lat;
 
     /**
      * Parse the WKB data from PostgreSQL.
@@ -38,27 +44,31 @@ class GeoPoint implements \JsonSerializable
     }
 
     /**
+     * Latitude.
+     *
      * @return float
      */
-    public function lat()
+    public function lat(): float
     {
         return $this->_lat;
     }
 
     /**
+     * Longitude.
+     *
      * @return float
      */
-    public function lng()
+    public function lng(): float
     {
         return $this->_lng;
     }
 
     /**
-     * Serialize to JSON.
+     * Returns the fields that will be serialized as JSON.
      *
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'lng' => $this->_lng,

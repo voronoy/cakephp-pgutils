@@ -8,5 +8,5 @@ class BoolArrayType extends ArrayType
     /**
      * @var string
      */
-    protected string $type = 'bool';
+    protected $type = 'bool';
 }

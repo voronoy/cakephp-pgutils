@@ -4,11 +4,13 @@ declare(strict_types=1);
 namespace Voronoy\PgUtils\Test\TestCase\Database\Type;
 
 use Cake\TestSuite\TestCase;
-use Voronoy\PgUtils\Test\TestApp\Model\Table\NetworksTable;
 
 class NetworkTypesTest extends TestCase
 {
-    public NetworksTable $Networks;
+    /**
+     * @var \Voronoy\PgUtils\Test\TestApp\Model\Table\NetworksTable
+     */
+    public $Networks;
 
     private $records = [
         ['mac' => null, 'mac8' => null],

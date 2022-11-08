@@ -1,21 +1,24 @@
 {
   "name": "voronoy/cakephp-pgutils",
-  "description": "Provides Common PostgreSQL Types and Bulk Upsert Behavior for CakePHP ORM.",
+  "description": "CakePHP plugin that extends ORM with PostgreSQL specific features.",
   "type": "cakephp-plugin",
   "keywords": [
     "cakephp",
+    "orm",
     "postgresql",
+    "postgis",
     "behavior",
     "plugin",
     "upsert",
     "bulk upsert",
-    "array types"
+    "array types",
+    "materialized view"
   ],
   "homepage": "https://github.com/voronoy/cakephp-pgutils",
   "license": "MIT",
   "authors": [
     {
-      "name": "voronoy",
+      "name": "Oleksii Voronyi",
       "role": "Author",
       "homepage": "https://github.com/voronoy"
     }
@@ -26,10 +29,11 @@
   "require": {
     "php": ">=7.2.0",
     "ext-json": "*",
+    "ext-pdo": "*",
     "cakephp/orm": "^4.0"
   },
   "require-dev": {
-    "ext-pdo": "*",
+    "cakephp/bake": "^2.3",
     "cakephp/cakephp": "^4.0",
     "cakephp/cakephp-codesniffer": "^4.2",
     "phpunit/phpunit": "~8.5.0"
@@ -49,6 +53,9 @@
     "test": "phpunit"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true
+    }
   }
 }

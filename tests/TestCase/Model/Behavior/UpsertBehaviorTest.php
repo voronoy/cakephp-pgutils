@@ -4,12 +4,14 @@ declare(strict_types=1);
 namespace Voronoy\PgUtils\Test\TestCase\Model\Behavior;
 
 use Cake\I18n\FrozenTime;
-use Cake\ORM\Table;
 use Cake\TestSuite\TestCase;
 
 class UpsertBehaviorTest extends TestCase
 {
-    public Table $Articles;
+    /**
+     * @var \Cake\ORM\Table
+     */
+    public $Articles;
 
     /**
      * Fixtures used by this test case.
@@ -32,7 +34,7 @@ class UpsertBehaviorTest extends TestCase
     public function testUpsert()
     {
         $result = $this->Articles->bulkUpsert([]);
-        $this->assertNull($result);
+        $this->assertEquals(0, $result);
         $records1 = [
             ['id' => 1, 'title' => 'Article 1 Mod', 'invalid_field1' => 12],
             ['title' => 'Article 4'],

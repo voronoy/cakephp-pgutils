@@ -8,5 +8,5 @@ class FloatArrayType extends ArrayType
     /**
      * @var string
      */
-    protected string $type = 'float';
+    protected $type = 'float';
 }

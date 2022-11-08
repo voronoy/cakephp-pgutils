@@ -13,7 +13,7 @@ class ArrayType extends BaseType implements BatchCastingInterface
     /**
      * @var string
      */
-    protected string $type = 'text';
+    protected $type = 'text';
 
     /**
      * Convert array data into the database format.
@@ -23,7 +23,7 @@ class ArrayType extends BaseType implements BatchCastingInterface
      * @return string|null
      * @throws \Voronoy\PgUtils\Exception\PgArrayInvalidParam
      */
-    public function toDatabase($value, DriverInterface $driver)
+    public function toDatabase($value, DriverInterface $driver): ?string
     {
         return PgArrayConverter::toPg($value, $this->type);
     }
@@ -35,7 +35,7 @@ class ArrayType extends BaseType implements BatchCastingInterface
      * @param \Cake\Database\DriverInterface $driver Object from which database preferences and configuration will be extracted
      * @return array|null
      */
-    public function toPHP($value, DriverInterface $driver)
+    public function toPHP($value, DriverInterface $driver): ?array
     {
         return PgArrayConverter::fromPg($value, $this->type);
     }

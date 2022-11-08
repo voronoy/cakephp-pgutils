@@ -23,20 +23,19 @@ class UpsertBehavior extends Behavior
      * Execute bulk upsert query.
      *
      * The options array accept the following keys:
+     *  - uniqueKey: List of fields which defines unique key. If not in $options or behavior config, primary key is used.
+     *  - updateColumns: List of fields that will be updated on conflict. Pass `*` to set all table columns.
+     *  - extra: Extra fields which will be appended to data.
+     *  - returning: List of fields that will be returned in statement. If empty, method returns the number of rows changed.
      *
-     * - uniqueKey: List of fields which defines unique key. If not in $options or behavior config, primary key is used.
-     * - updateColumns: List of fields that will be updated on conflict. Pass `*` to set all table columns.
-     * - extra: Extra fields which will be appended to data.
-     * - returning: List of fields that will be returned in statement. If empty, method returns the number of rows changed.
-     *
-     * @param array $data    Upsert data
+     * @param array $data Upsert data
      * @param array $options Options
-     * @return int|\Cake\Database\StatementInterface|null Returns the number of rows changed, database statement or null.
+     * @return int|\Cake\Database\StatementInterface Returns the number of rows changed or database statement.
      */
     public function bulkUpsert(array $data, array $options = [])
     {
         if (empty($data)) {
-            return null;
+            return 0;
         }
         $primaryKey = $this->_table->getPrimaryKey();
         $options += [
@@ -81,10 +80,10 @@ class UpsertBehavior extends Behavior
         $fields = array_unique(array_merge($uniqueKey, $fields, array_keys($extra)));
         $updateValues = [];
         foreach ($updateColumns as $column) {
-            array_push($updateValues, "{$column} = EXCLUDED.{$column}");
+            $updateValues[] = "$column = EXCLUDED.$column";
         }
         $conflictKey = implode(',', $uniqueKey);
-        $epilog = "ON CONFLICT ({$conflictKey})";
+        $epilog = "ON CONFLICT ($conflictKey)";
         if (empty($updateColumns)) {
             $epilog .= ' DO NOTHING';
         } else {
