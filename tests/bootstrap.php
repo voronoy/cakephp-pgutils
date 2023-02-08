@@ -46,15 +46,15 @@ Configure::write('App', [
 ]);
 
 Configure::write('Cache', [
-        '_cake_model_' => [
-            'className' => \Cake\Cache\Engine\NullEngine::class,
-            'prefix' => 'myapp_cake_model_',
-            'path' => ROOT . 'models' . DS,
-            'serialize' => true,
-            'duration' => '+1 minute',
-            'url' => env('CACHE_CAKEMODEL_URL', null),
-        ],
-    ]);
+    '_cake_model_' => [
+        'className' => \Cake\Cache\Engine\NullEngine::class,
+        'prefix' => 'myapp_cake_model_',
+        'path' => ROOT . 'models' . DS,
+        'serialize' => true,
+        'duration' => '+1 minute',
+        'url' => env('CACHE_CAKEMODEL_URL', null),
+    ],
+]);
 
 if (file_exists($root . '/config/bootstrap.php')) {
     require $root . '/config/bootstrap.php';

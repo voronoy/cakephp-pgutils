@@ -33,7 +33,7 @@ class ArrayTypeTest extends TestCase
 
     public function testArray()
     {
-        $first = $this->Arrays->find()->first();
+        $first = $this->Arrays->find()->where(['txt1 IS NOT' => null])->first();
         $this->assertTrue(is_array($first->txt1));
         $this->assertEquals(5, count($first->txt1));
         $this->assertNull($first->txt1[4]);
@@ -55,7 +55,7 @@ class ArrayTypeTest extends TestCase
         $first->f1 = ['12.34', 11];
         $first->bool1 = [true, false, null, 1, 0, 'false', '', 'True'];
         $this->Arrays->save($first);
-        $first = $this->Arrays->find()->first();
+        $first = $this->Arrays->find()->where(['txt1 IS NOT' => null])->first();
         $this->assertEquals([true, false, null, true, false, false, false, true], $first->bool1);
         $this->assertEquals([12.34, 11], $first->f1);
         $this->assertEquals([12, 11], $first->int1);
@@ -67,6 +67,12 @@ class ArrayTypeTest extends TestCase
         $this->Arrays->save($second);
         $second = $this->Arrays->get($second->id);
         $this->assertNull($second->txt2);
+
+        $empty = $this->Arrays->find()->where(['txt1 IS' => null])->first();
+        $this->assertEquals([], $empty->txt2);
+        $this->assertEquals([], $empty->int1);
+        $this->assertEquals([], $empty->f1);
+        $this->assertEquals([], $empty->bool1);
     }
 
     public function testNull()

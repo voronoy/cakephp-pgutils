@@ -39,9 +39,13 @@ class PgArrayConverter
                 $return[] = static::fromPg($openBraces . $part . $closeBraces, $type);
             }
         } else {
-            $parsed = str_getcsv(trim($data, '{}'));
+            $data = trim($data, '{}');
+            if (!strlen($data)) {
+                return [];
+            }
+            $parsed = str_getcsv($data);
             if ($type === 'text') {
-                $checkNulls = str_getcsv(trim($data, '{}'), ',', "\u{2007}");
+                $checkNulls = str_getcsv($data, ',', "\u{2007}");
             }
             foreach ($parsed as $i => $value) {
                 if ($value === null) {

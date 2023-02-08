@@ -28,6 +28,13 @@ class ArraysFixture extends TestFixture
             'f1' => '{1.21,2.0,3}',
             'bool1' => '{true,false,1,f,null,0, TRUE}',
         ],
+        [
+            'txt1' => null,
+            'txt2' => '{}',
+            'int1' => '{}',
+            'f1' => '{}',
+            'bool1' => '{}',
+        ],
     ];
 
     /**
