@@ -5,6 +5,7 @@ namespace Voronoy\PgUtils\Test\TestCase\Database\Type;
 
 use Cake\TestSuite\TestCase;
 use Voronoy\PgUtils\Database\GeoPoint;
+use Voronoy\PgUtils\Database\Type\GeoPointType;
 
 class GeoTypeTest extends TestCase
 {
@@ -31,11 +32,11 @@ class GeoTypeTest extends TestCase
     {
         $first = $this->Geo->get(1);
         $second = $this->Geo->get(2);
-        $this->assertTrue($first->pt instanceof GeoPoint);
-        $this->assertEquals(-118.146251, $first->pt->lng());
-        $this->assertEquals(33.82928, $first->pt->lat());
+        $this->assertTrue($first->get('pt') instanceof GeoPoint);
+        $this->assertEquals(-118.146251, $first->get('pt')->lng());
+        $this->assertEquals(33.82928, $first->get('pt')->lat());
         $this->assertEquals('{"id":1,"pt":{"lng":-118.146251,"lat":33.82928}}', json_encode($first));
-        $this->assertNull($second->pt);
+        $this->assertNull($second->get('pt'));
 
         $lng = -118.017946;
         $lat = 33.954716;
@@ -59,5 +60,18 @@ class GeoTypeTest extends TestCase
                 $this->assertEquals($lat, $record->pt->lat());
             }
         }
+    }
+
+    public function testNonDefaultSchema()
+    {
+        GeoPointType::setConfig('schema', 'public');
+        $lng = -118.017946;
+        $lat = 33.954716;
+        $entity = $this->Geo->newEntity(['id' => 6, 'pt' => "$lng,$lat"]);
+        $this->Geo->save($entity);
+        $record = $this->Geo->find()->where(['id' => 6])->first();
+        $this->assertTrue($record->get('pt') instanceof GeoPoint);
+        $this->assertEquals($lng, $record->get('pt')->lng());
+        $this->assertEquals($lat, $record->get('pt')->lat());
     }
 }
