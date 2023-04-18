@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Voronoy\PgUtils\Database\Type;
 
+use Cake\Core\StaticConfigTrait;
 use Cake\Database\DriverInterface;
 use Cake\Database\Expression\FunctionExpression;
 use Cake\Database\ExpressionInterface;
@@ -12,6 +13,8 @@ use Voronoy\PgUtils\Database\GeoPoint;
 
 class GeoPointType extends BaseType implements ExpressionTypeInterface
 {
+    use StaticConfigTrait;
+
     /**
      * @inheritDoc
      */
@@ -70,9 +73,25 @@ class GeoPointType extends BaseType implements ExpressionTypeInterface
             $lat = null;
         }
 
-        return new FunctionExpression('ST_SetSRID', [
-            new FunctionExpression('ST_Point', [$lng, $lat]),
-            4326,
+        return new FunctionExpression($this->_schemaPrefix('ST_SetSRID'), [
+            new FunctionExpression($this->_schemaPrefix('ST_Point'), [$lng, $lat]),
+            static::getConfig('srid') ?? 4326,
         ]);
+    }
+
+    /**
+     * Returns function name with schema prefix.
+     *
+     * @param string $function Function name.
+     * @return string
+     */
+    protected function _schemaPrefix(string $function): string
+    {
+        $schema = static::getConfig('schema');
+        if (!$schema) {
+            return $function;
+        }
+
+        return $schema . '.' . $function;
     }
 }
