@@ -20,6 +20,9 @@ class UpsertBehaviorTest extends TestCase
      */
     protected $fixtures = ['plugin.Voronoy/PgUtils.Articles'];
 
+    /**
+     * @return void
+     */
     public function setUp(): void
     {
         parent::setUp();
@@ -31,6 +34,9 @@ class UpsertBehaviorTest extends TestCase
         ]);
     }
 
+    /**
+     * @return void
+     */
     public function testUpsert()
     {
         $result = $this->Articles->bulkUpsert([]);
@@ -87,6 +93,9 @@ class UpsertBehaviorTest extends TestCase
         $this->assertEquals(10, $first->external_id);
     }
 
+    /**
+     * @return void
+     */
     public function testUpsert2()
     {
         $now = FrozenTime::now();
@@ -103,5 +112,25 @@ class UpsertBehaviorTest extends TestCase
         $this->assertEquals('MOD', $this->Articles->findByExternalIdAndAuthorId(1, 1)->first()->body);
         $this->assertEquals($now, $this->Articles->findByExternalIdAndAuthorId(1, 1)->first()->modified);
         $this->assertEquals($now->addDay(-1), $this->Articles->findByExternalIdAndAuthorId(1, 2)->first()->modified);
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpsertEmptyColumns()
+    {
+        $records = [
+            ['id' => 1, 'title' => 'Article 1 Nod'],
+            ['id' => 2, 'title' => 'Article 2 Mod'],
+            ['title' => 'New Article'],
+            ['title' => 'New Article 2'],
+        ];
+        $this->Articles->bulkUpsert($records, [
+            'uniqueKey' => ['id'],
+            'updateColumns' => [],
+        ]);
+        $this->assertEquals(5, $this->Articles->find()->count());
+        $this->assertEquals(0, $this->Articles->find()->where(['title ILIKE' => '%Mod'])->count());
+        $this->assertEquals(2, $this->Articles->find()->where(['title ILIKE' => 'New Article%'])->count());
     }
 }
