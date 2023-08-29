@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Voronoy\PgUtils\Test\TestCase\ORM;
 
-use Cake\Core\Configure;
 use Cake\Database\Schema\CachedCollection;
 use Cake\TestSuite\TestCase;
 
@@ -32,7 +31,6 @@ class CachedMaterializedViewTest extends TestCase
 
     public function testMatViewCollection()
     {
-        pr(Configure::read());
         $class = new \ReflectionClass($this->MatView);
         $method = $class->getMethod('getSchemaCollection');
         $method->setAccessible(true);
