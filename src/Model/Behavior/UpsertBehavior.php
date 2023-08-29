@@ -68,11 +68,11 @@ class UpsertBehavior extends Behavior
         foreach ($data as $row) {
             $fields = array_flip(array_flip(array_merge($fields, array_keys($row))));
         }
-        $fields = array_unique(array_merge($uniqueKey, $fields, array_keys($extra)));
         if (!empty($updateColumns)) {
             $updateColumns = array_intersect((array)$updateColumns, $tableColumns);
             $fields = array_intersect($fields, $updateColumns);
         }
+        $fields = array_unique(array_merge($uniqueKey, $fields, array_keys($extra)));
         $conflictKey = implode(',', $uniqueKey);
         $epilog = "ON CONFLICT ($conflictKey)";
         if (empty($updateColumns)) {
