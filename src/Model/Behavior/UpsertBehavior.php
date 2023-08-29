@@ -61,9 +61,6 @@ class UpsertBehavior extends Behavior
                                          ->bind(':id', $primaryKey)
                                          ->first()->sequence ?? null;
         }
-        $updateColumns = array_filter((array)$updateColumns, function ($column) use ($tableColumns) {
-            return in_array($column, $tableColumns);
-        });
         $extra = array_filter($extra, function ($column) use ($tableColumns) {
             return in_array($column, $tableColumns);
         }, ARRAY_FILTER_USE_KEY);
@@ -71,22 +68,20 @@ class UpsertBehavior extends Behavior
         foreach ($data as $row) {
             $fields = array_flip(array_flip(array_merge($fields, array_keys($row))));
         }
-        $fields = array_filter(
-            $fields,
-            function ($key) use ($updateColumns) {
-                return in_array($key, $updateColumns);
-            }
-        );
         $fields = array_unique(array_merge($uniqueKey, $fields, array_keys($extra)));
-        $updateValues = [];
-        foreach ($updateColumns as $column) {
-            $updateValues[] = "$column = EXCLUDED.$column";
+        if (!empty($updateColumns)) {
+            $updateColumns = array_intersect((array)$updateColumns, $tableColumns);
+            $fields = array_intersect($fields, $updateColumns);
         }
         $conflictKey = implode(',', $uniqueKey);
         $epilog = "ON CONFLICT ($conflictKey)";
         if (empty($updateColumns)) {
             $epilog .= ' DO NOTHING';
         } else {
+            $updateValues = [];
+            foreach ($updateColumns as $column) {
+                $updateValues[] = "$column = EXCLUDED.$column";
+            }
             $epilog .= ' DO UPDATE SET ' . implode(',', $updateValues);
         }
         if (!empty($returning)) {
@@ -101,8 +96,15 @@ class UpsertBehavior extends Behavior
         foreach ($data as $row) {
             $filtered = array_filter(
                 $row,
-                function ($key) use ($updateColumns, $uniqueKey) {
-                    return in_array($key, $updateColumns) || in_array($key, $uniqueKey);
+                function ($key) use ($updateColumns, $uniqueKey, $tableColumns) {
+                    if (in_array($key, $uniqueKey)) {
+                        return true;
+                    }
+                    if (!empty($updateColumns)) {
+                        return in_array($key, $updateColumns);
+                    }
+
+                    return in_array($key, $tableColumns);
                 },
                 ARRAY_FILTER_USE_KEY
             );
