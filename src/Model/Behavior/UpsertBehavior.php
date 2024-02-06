@@ -64,15 +64,15 @@ class UpsertBehavior extends Behavior
         $extra = array_filter($extra, function ($column) use ($tableColumns) {
             return in_array($column, $tableColumns);
         }, ARRAY_FILTER_USE_KEY);
-        $fields = [];
-        foreach ($data as $row) {
-            $fields = array_flip(array_flip(array_merge($fields, array_keys($row))));
-        }
+        $fields = array_reduce($data, function ($fields, $row) {
+            return array_unique(array_merge($fields, array_keys($row)));
+        }, []);
         if (!empty($updateColumns)) {
             $updateColumns = array_intersect((array)$updateColumns, $tableColumns);
             $fields = array_intersect($fields, $updateColumns);
         }
         $fields = array_unique(array_merge($uniqueKey, $fields, array_keys($extra)));
+        $fields = array_intersect($fields, $tableColumns);
         $conflictKey = implode(',', $uniqueKey);
         $epilog = "ON CONFLICT ($conflictKey)";
         if (empty($updateColumns)) {
