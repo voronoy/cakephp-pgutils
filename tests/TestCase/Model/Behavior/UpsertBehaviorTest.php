@@ -9,7 +9,7 @@ use Cake\TestSuite\TestCase;
 class UpsertBehaviorTest extends TestCase
 {
     /**
-     * @var \Cake\ORM\Table
+     * @var \Cake\ORM\Table|\Voronoy\PgUtils\Model\Behavior\UpsertBehavior
      */
     public $Articles;
 
@@ -121,7 +121,7 @@ class UpsertBehaviorTest extends TestCase
     {
         $records = [
             ['id' => 1, 'title' => 'Article 1 Nod'],
-            ['id' => 2, 'title' => 'Article 2 Mod'],
+            ['id' => 2, 'title' => 'Article 2 Mod', 'invalid_column' => 1],
             ['title' => 'New Article'],
             ['title' => 'New Article 2'],
         ];
