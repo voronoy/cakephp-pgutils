@@ -110,7 +110,7 @@ class PgArrayConverter
                         if (is_numeric($t)) {
                             $t = (int)$t;
                         } else {
-                            throw new PgArrayInvalidParam(sprintf('%s is not a properly formatted bool type.', $t));
+                            throw new PgArrayInvalidParam(sprintf('%s is not a properly formatted integer type.', $t));
                         }
                         break;
                     case 'float':
@@ -118,7 +118,7 @@ class PgArrayConverter
                         if (is_numeric($t)) {
                             $t = (float)$t;
                         } else {
-                            throw new PgArrayInvalidParam(sprintf('%s is not a properly formatted bool type.', $t));
+                            throw new PgArrayInvalidParam(sprintf('%s is not a properly formatted numeric type.', $t));
                         }
                         break;
                     case 'text':
